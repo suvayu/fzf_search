@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# # debug
+# set -o xtrace
+
+if [[ ! -t 0 ]]; then
+    declare FILES=$(cat /dev/stdin | tr '\n' ' ')
+fi
+
+declare QUERY="$1"
+declare RG_PREFIX="rg --column --line-number --no-heading --with-filename --color=always --smart-case"
+declare FZF_DEFAULT_COMMAND="${FZF_CMD:=$RG_PREFIX $QUERY ${FILES[@]}}"
+
+declare VIEWER="bat --style=full --color=always"
+declare FZF_DEFAULT_OPTS="--exact --multi"
+
+fzf --ansi --prompt='? ' --query "$QUERY" --disabled --delimiter : \
+    --preview "$VIEWER -H {2} {1}" \
+    --preview-window 'border-left:~4,+{2}' \
+    --bind "enter:execute($VIEWER -H {2} {1})" \
+    --bind "alt-enter:execute($EDITOR +{2} {1})" \
+    --bind "change:reload($RG_PREFIX {q} ${FILES[@]} || true)" \
+    --bind "ctrl-s:select-all+execute(cat {+f} | cut -d: -f1 | uniq | fzf-search || true)+deselect-all" \
+    --bind "ctrl-f:select-all+execute(cat {+f} | cut -d: -f1 | uniq | fzf-file {q} || true)+deselect-all"
