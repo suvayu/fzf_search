@@ -8,6 +8,8 @@
 # fi
 # declare FZF_DEFAULT_COMMAND="${FZF_CMD:=rg --files ${FILES[@]}}"
 
+declare SRCDIR=$(dirname $(readlink -e $0))
+
 declare QUERY="$1"
 unset FZF_DEFAULT_COMMAND
 
@@ -15,6 +17,9 @@ declare VIEWER="bat --style=full --color=always --pager 'less \"+/$QUERY\"'"
 declare FZF_DEFAULT_OPTS="--exact --multi"
 
 fzf --ansi --prompt='> ' \
+    --header-first \
+    --header "« F1 help, C-s recursive search, RET view, M-RET open »" \
+    --bind "f1:execute(man -l $SRCDIR/help.1 || true)" \
     --preview "$VIEWER {1}" \
     --preview-window 'border-left:~4' \
     --bind "enter:execute($VIEWER {1})" \
