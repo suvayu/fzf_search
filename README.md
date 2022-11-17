@@ -7,11 +7,11 @@ Search a source tree recursively with `rg` and `fzf`.
 
 When you are working in a large repository/working directory,
 searching for blocks of text in hundreds of files can be difficult.
-This Ripgrep user-interface using FZF addresses that by leting you
-narrow down your search results by letting you search recursively with
-a set of files restricted further by the previous search.  You easily
-switch between searching file contents to filtering file paths.  Here
-is a mini screencast demonstrating some of these features.
+This FZF UI for Ripgrep addresses that by letting you narrow down your
+search results by recursively.  A search is restricted to the set of
+files with matches in the previous step.  At any point, you can easily
+switch between searching file contents and filtering on file paths.
+Here is a mini screencast demonstrating some of these features.
 
 ![screen cast of using fzf-search](./fzf-search-demo.gif)
 
