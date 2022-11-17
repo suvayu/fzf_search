@@ -76,7 +76,7 @@ Precedence in character classes, from most binding to least:
 | Composites | Description                     |
 |:----------:|:--------------------------------|
 | xy         | concatenation (x followed by y) |
-| x|y        | alternation (x or y, prefer x)  |
+| x\|y       | alternation (x or y, prefer x)  |
 
 ## Repetitions
 
