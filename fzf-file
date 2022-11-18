@@ -13,7 +13,11 @@ declare SRCDIR=$(dirname $(readlink -e $0))
 declare QUERY="$1"
 unset FZF_DEFAULT_COMMAND
 
-declare VIEWER="bat --style=full --color=always --pager 'less \"+/$QUERY\"'"
+if [[ -f $(which bat 2> /dev/null) ]]; then
+    declare VIEWER="bat --style=full --color=always --pager 'less \"+/$QUERY\"'"
+else
+    declare VIEWER="less -N '+/$QUERY'"
+fi
 declare FZF_DEFAULT_OPTS="--exact --multi"
 
 fzf --ansi --prompt='> ' \

@@ -22,11 +22,11 @@ Here is a mini screencast demonstrating some of these features.
 - <kbd>F1</kbd> help message
 - <kbd>C-s</kbd> search source tree recursively
 - <kbd>C-f</kbd> limit files to search
-- <kbd>RET</kbd> - open in a pager (`bat`)
+- <kbd>RET</kbd> - open in a pager (`bat` or `less`)
 - <kbd>M-RET</kbd> - open in `$EDITOR`
 
 ### Dependencies
 
 - `rg` for search
 - `fzf` for display & filtering UI
-- `bat` for preview
+- `bat` for preview (optional, falls back to `less`)

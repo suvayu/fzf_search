@@ -13,16 +13,20 @@ declare QUERY="$1"
 declare RG_PREFIX="rg --column --line-number --no-heading --with-filename --color=always --smart-case"
 declare FZF_DEFAULT_COMMAND="${FZF_CMD:=$RG_PREFIX $QUERY ${FILES[@]}}"
 
-declare VIEWER="bat --style=full --color=always"
+if [[ -f $(which bat 2> /dev/null) ]]; then
+    declare VIEWER="bat --style=full --color=always -H {2}"
+else
+    declare VIEWER="less -N '+/{q}' '+{2}g' "
+fi
 declare FZF_DEFAULT_OPTS="--exact --multi"
 
 fzf --ansi --prompt='? ' --query "$QUERY" --disabled --delimiter : \
     --header-first \
     --header "« F1 help, C-s recursive search, C-f filter files, RET view, M-RET open »" \
     --bind "f1:execute(man -l $SRCDIR/help.1 || true)" \
-    --preview "$VIEWER -H {2} {1}" \
+    --preview "$VIEWER {1}" \
     --preview-window 'border-left:~4,+{2}' \
-    --bind "enter:execute($VIEWER -H {2} {1})" \
+    --bind "enter:execute($VIEWER {1})" \
     --bind "alt-enter:execute($EDITOR +{2} {1})" \
     --bind "change:reload($RG_PREFIX {q} ${FILES[@]} || true)" \
     --bind "ctrl-s:select-all+execute(cat {+f} | cut -d: -f1 | uniq | fzf-search || true)+deselect-all" \
