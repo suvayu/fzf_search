@@ -20,6 +20,8 @@ else
 fi
 declare FZF_DEFAULT_OPTS="--exact --multi"
 
+declare PARSE_LINES="cat {+f} | cut -d: -f1 | uniq"
+
 fzf --ansi --prompt='? ' --query "$QUERY" --disabled --delimiter : \
     --header-first \
     --header "« F1 help, C-s recursive search, C-f filter files, RET view, M-RET open »" \
@@ -29,5 +31,5 @@ fzf --ansi --prompt='? ' --query "$QUERY" --disabled --delimiter : \
     --bind "enter:execute($VIEWER {1})" \
     --bind "alt-enter:execute($EDITOR +{2} {1})" \
     --bind "change:reload($RG_PREFIX {q} ${FILES[@]} || true)" \
-    --bind "ctrl-s:select-all+execute(cat {+f} | cut -d: -f1 | uniq | fzf-search || true)+deselect-all" \
-    --bind "ctrl-f:select-all+execute(cat {+f} | cut -d: -f1 | uniq | fzf-file {q} || true)+deselect-all"
+    --bind "ctrl-s:select-all+execute($PARSE_LINES | fzf-search || true)+deselect-all" \
+    --bind "ctrl-f:select-all+execute($PARSE_LINES | fzf-file {q} || true)+deselect-all"
