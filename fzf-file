@@ -14,7 +14,7 @@ declare QUERY="$1"
 unset FZF_DEFAULT_COMMAND
 
 if [[ -f $(which bat 2> /dev/null) ]]; then
-    declare VIEWER="bat --style=full --color=always --pager 'less \"+/$QUERY\"'"
+    declare VIEWER="bat --style=full --color=always --paging=always --pager 'less \"+/$QUERY\"'"
 else
     declare VIEWER="less -N '+/$QUERY'"
 fi

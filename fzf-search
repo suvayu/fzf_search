@@ -14,7 +14,7 @@ declare RG_PREFIX="rg --column --line-number --no-heading --with-filename --colo
 declare FZF_DEFAULT_COMMAND="${FZF_CMD:=$RG_PREFIX $QUERY ${FILES[@]}}"
 
 if [[ -f $(which bat 2> /dev/null) ]]; then
-    declare VIEWER="bat --style=full --color=always -H {2}"
+    declare VIEWER="bat --style=full --color=always --paging=always -H {2}"
 else
     declare VIEWER="less -N '+/{q}' '+{2}g' "
 fi
