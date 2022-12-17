@@ -13,10 +13,20 @@ declare SRCDIR=$(dirname $(readlink -e $0))
 declare QUERY="$1"
 unset FZF_DEFAULT_COMMAND
 
+declare VIEWER HEADER
 if [[ -f $(which bat 2> /dev/null) ]]; then
-    declare VIEWER="bat --style=full --color=always --paging=always --pager 'less \"+/$QUERY\"'"
+    HEADER='~4'
+    if [[ -n $QUERY ]]; then
+	VIEWER="bat --style=full --color=always --paging=always --pager 'less \"+/$QUERY\"'"
+    else
+	VIEWER="bat --style=full --color=always --paging=always"
+    fi
 else
-    declare VIEWER="less -N '+/$QUERY'"
+    if [[ -n $QUERY ]]; then
+	VIEWER="less -NS '+/$QUERY'"
+    else
+	VIEWER="less -NS"
+    fi
 fi
 declare FZF_DEFAULT_OPTS="--exact --multi"
 
@@ -25,7 +35,7 @@ fzf --ansi --prompt='> ' \
     --header "« F1 help, C-s recursive search, RET view, M-RET open »" \
     --bind "f1:execute(man -l $SRCDIR/help.1 || true)" \
     --preview "$VIEWER {1}" \
-    --preview-window 'border-left:~4' \
+    --preview-window "border-left:$HEADER" \
     --bind "enter:execute($VIEWER {1})" \
     --bind "alt-enter:execute($EDITOR {1})" \
     --bind "ctrl-s:select-all+execute(uniq {+f} | fzf-search ${QUERY} || true)+deselect-all"
