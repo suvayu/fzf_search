@@ -20,12 +20,11 @@ if [[ -f $(which bat 2> /dev/null) ]]; then
 else
     VIEWER="$LESS_SCROLL -N '+/{q}'"
 fi
-declare FZF_DEFAULT_OPTS="--exact --multi"
+declare FZF_DEFAULT_OPTS="--ansi --header-first --exact --multi"
 
 declare PARSE_LINES="cat {+f} | cut -d: -f1 | uniq"
 
-fzf --ansi --prompt='? ' --query "$QUERY" --disabled --delimiter : \
-    --header-first \
+fzf --prompt='? ' --query "$QUERY" --disabled --delimiter : \
     --header "« F1 help, C-s recursive search, C-f filter files, RET view, M-RET open »" \
     --bind "f1:execute(man -l $SRCDIR/help.1 || true)" \
     --preview "$VIEWER {1}" \
