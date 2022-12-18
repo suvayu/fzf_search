@@ -3,15 +3,20 @@
 # # debug
 # set -o xtrace
 
-if [[ ! -t 0 ]]; then
-    declare FILES=$(cat /dev/stdin | tr '\n' ' ')
+declare tmpdir=$(mktemp -d)
+declare CACHE=$tmpdir/fzf-search-file-cache-${UID}.txt
+if [[ ! -t 0 ]]; then		# stdin not attached to a tty
+    cat /dev/stdin > $CACHE
+else
+    rg --files > $CACHE
 fi
 
 declare SRCDIR=$(dirname $(readlink -e $0))
 
 declare QUERY="$1"
-declare RG_PREFIX="rg --column --line-number --no-heading --with-filename --color=always --smart-case"
-declare FZF_DEFAULT_COMMAND="${FZF_CMD:=$RG_PREFIX $QUERY ${FILES[@]}}"
+declare RG="rg --column --line-number --no-heading --with-filename --color=always --smart-case"
+declare RG_PIPE="cat $CACHE | xargs $RG"
+declare FZF_DEFAULT_COMMAND="$RG_PIPE $QUERY"
 
 declare VIEWER HEADER LESS_SCROLL="less +{2}g"
 if [[ -f $(which bat 2> /dev/null) ]]; then
@@ -31,6 +36,8 @@ fzf --prompt='? ' --query "$QUERY" --disabled --delimiter : \
     --preview-window "border-left:${HEADER},+{2}-3" \
     --bind "enter:execute($VIEWER {1})" \
     --bind "alt-enter:execute($EDITOR +{2} {1})" \
-    --bind "change:reload($RG_PREFIX {q} ${FILES[@]} || true)" \
+    --bind "change:reload($RG_PIPE {q} || true)" \
     --bind "ctrl-s:select-all+execute($PARSE_LINES | fzf-search || true)+deselect-all" \
     --bind "ctrl-f:select-all+execute($PARSE_LINES | QUERY='{q}' fzf-file || true)+deselect-all"
+
+rm -rf $tmpdir
