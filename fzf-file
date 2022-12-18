@@ -3,15 +3,13 @@
 # # debug
 # set -o xtrace
 
-# if [[ ! -t 0 ]]; then
-#     declare FILES=$(cat /dev/stdin | tr '\n' ' ')
-# fi
-# declare FZF_DEFAULT_COMMAND="${FZF_CMD:=rg --files ${FILES[@]}}"
+if [[ ! -t 0 ]]; then		# stdin not attached to a tty
+    unset FZF_DEFAULT_COMMAND
+else
+    FZF_DEFAULT_COMMAND="rg --files $1"
+fi
 
 declare SRCDIR=$(dirname $(readlink -e $0))
-
-declare QUERY="$1"
-unset FZF_DEFAULT_COMMAND
 
 declare VIEWER HEADER
 if [[ -f $(which bat 2> /dev/null) ]]; then
