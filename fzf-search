@@ -33,4 +33,4 @@ fzf --prompt='? ' --query "$QUERY" --disabled --delimiter : \
     --bind "alt-enter:execute($EDITOR +{2} {1})" \
     --bind "change:reload($RG_PREFIX {q} ${FILES[@]} || true)" \
     --bind "ctrl-s:select-all+execute($PARSE_LINES | fzf-search || true)+deselect-all" \
-    --bind "ctrl-f:select-all+execute($PARSE_LINES | fzf-file {q} || true)+deselect-all"
+    --bind "ctrl-f:select-all+execute($PARSE_LINES | QUERY='{q}' fzf-file || true)+deselect-all"
