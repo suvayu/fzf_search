@@ -7,10 +7,10 @@ Search a source tree recursively with `rg` and `fzf`.
 
 When you are working in a large repository/working directory,
 searching for blocks of text in hundreds of files can be difficult.
-This FZF UI for Ripgrep addresses that by letting you narrow down your
-search results by recursively.  A search is restricted to the set of
-files with matches in the previous step.  At any point, you can easily
-switch between searching file contents and filtering on file paths.
+This FZF interface for Ripgrep addresses that by letting you narrow
+down your search results recursively.  A search is restricted to the
+set of files with matches in the previous step.  At any point, you can
+easily switch between searching file contents or filtering file paths.
 Here is a mini screencast demonstrating some of these features.
 
 ![screen cast of using fzf-search](./fzf-search-demo.gif)
@@ -25,13 +25,23 @@ Here is a mini screencast demonstrating some of these features.
 - <kbd>RET</kbd> - open in a pager (`bat` or `less`)
 - <kbd>M-RET</kbd> - open in `$EDITOR`
 
+## Example commands
+
+- Find files in a directory to search:
+  ```shell
+  $ fzf-file <directory>
+  ```
+- Search the current directory:
+  ```shell
+  $ fzf-search <query>
+  ```
+
 ## Dependencies
 
 - Ripgrep or `rg` for search
 - `fzf` for display & filtering UI
 - (optional) `bat` for preview.  It's a `cat` clone with syntax
-  highlighting support.  If it isn't found in `$PATH`, preview falls
-  back to using `less`.
+  highlighting support.  If it isn't found in `$PATH`, `less` is used.
 - `man` to see the help message
 
 ## Installation
