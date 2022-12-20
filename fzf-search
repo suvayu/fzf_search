@@ -50,7 +50,7 @@ fi
 declare PARSE_LINES="cat {+f} | cut -d: -f1 | uniq"
 
 fzf --prompt='? ' --query "$QUERY" --disabled --delimiter : \
-    --header "« F1 help, C-s recursive search, C-f filter files, RET view, M-RET open »" \
+    --header "« F1: help, C-s: recursive search, C-f: filter files, RET: view, M-RET: open »" \
     --bind "f1:execute(man -l $SRCDIR/help.1 || true)" \
     --preview "$VIEWER {1}" \
     --preview-window "border-left:${HEADER},+{2}-3" \

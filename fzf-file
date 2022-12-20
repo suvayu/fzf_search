@@ -36,7 +36,7 @@ fi
 declare FZF_DEFAULT_OPTS="--ansi --header-first --exact --multi"
 
 fzf --prompt='> ' \
-    --header "« F1 help, C-s recursive search, RET view, M-RET open »" \
+    --header "« F1: help, C-s: recursive search, RET: view, M-RET: open »" \
     --bind "f1:execute(man -l $SRCDIR/help.1 || true)" \
     --preview "$VIEWER {1}" \
     --preview-window "border-left:$HEADER" \
