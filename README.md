@@ -38,10 +38,11 @@ Here is a mini screencast demonstrating some of these features.
 
 ## Dependencies
 
-- Ripgrep or `rg` for search
-- `fzf` for display & filtering UI
-- (optional) `bat` for preview.  It's a `cat` clone with syntax
-  highlighting support.  If it isn't found in `$PATH`, `less` is used.
+- [Ripgrep](https://github.com/BurntSushi/ripgrep/) or `rg` for search
+- [`fzf`](https://github.com/junegunn/fzf) for display & filtering UI
+- (optional) [`bat`](https://github.com/sharkdp/bat) for preview.
+  It's a `cat` clone with syntax highlighting support.  If it isn't
+  found in `$PATH`, `less` is used.
 - `man` to see the help message
 
 ## Installation
@@ -58,9 +59,9 @@ this:
    $ export PATH="$PWD/fzf_search:$PATH"
    ```
 
-   To make this permanent, add set this value of `$PATH` in your
-   shell's profile/rc file.  For Bash that would be `~/.bash_profile`
-   or `~/.bashrc`.
+   To make this permanent, set this value of `$PATH` in your shell's
+   profile/rc file.  For Bash that would be `~/.bash_profile` or
+   `~/.bashrc`.
 
 2. Checkout this repo, and create symlinks to the scripts in a
    directory that is present in your `$PATH`.  Say `~/bin` is in your
