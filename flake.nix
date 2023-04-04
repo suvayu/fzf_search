@@ -12,7 +12,7 @@
     devShell.x86_64-linux = mkShell { 
       buildInputs = dependencies;
     };
-    defaultPackage.x86_64-linux = 
+    packages.x86_64-linux.fzf-search = 
     stdenv.mkDerivation {
        name = "fzf-search";
        src = self;
@@ -28,8 +28,24 @@
        in
        ''
          wrapProgram "$out/bin/fzf-search" --prefix PATH : "${dependency_path}"
+         wrapProgram "$out/bin/fzf-file" --prefix PATH : "${dependency_path}"
        '';
     };
+
+    # nix run <loc>#fzf-search
+    apps.x86_64-linux.fzf-search = {
+    type = "app";
+    program = "${self.packages.x86_64-linux.fzf-search}/bin/fzf-search";
+    };
+
+    # nix run <loc>#fzf-file
+    apps.x86_64-linux.fzf-file = {
+    type = "app";
+    program = "${self.packages.x86_64-linux.fzf-search}/bin/fzf-file";
+    };
+
+    # Default nix run
+    apps.x86_64-linux.default = self.apps.x86_64-linux.fzf-search;
   };
 
 }
