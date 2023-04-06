@@ -89,3 +89,15 @@ is discouraged as it's difficult to update the scripts.
 If you have followed options (1) or (2) to install the scripts, you
 may update by navigating to the git repository, and running `git
 pull`.  If you opted for option (3) to install, you need to reinstall.
+
+### FAQ
+
+#### I see characters like `^[[0m`, `^[[3m` in `fzf`, and file preview breaks
+
+For some reason ANSI escape codes are not being interpreted by `fzf`
+correctly, that leads to incorrect file names, which breaks the file
+preview.  You can disable colour as a workaround.
+
+```shell
+  $ NOCOLOR=1 fzf-search <query>
+```

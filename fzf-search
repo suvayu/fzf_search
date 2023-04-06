@@ -13,8 +13,14 @@ fi
 
 declare SRCDIR=$(dirname $(readlink -e $0))
 
+if [[ -n $NOCOLOR ]]; then
+    declare _COLOR=never
+else
+    declare _COLOR=always
+fi
+
 declare QUERY="$1"
-declare RG="rg --column --line-number --no-heading --with-filename --color=always --smart-case"
+declare RG="rg --column --line-number --no-heading --with-filename --color=${_COLOR} --smart-case"
 declare RG_PIPE="cat $CACHE | xargs $RG"
 declare FZF_DEFAULT_COMMAND="$RG_PIPE $QUERY"
 
