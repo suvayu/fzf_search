@@ -6,10 +6,51 @@ Recursively search w/ FZF & Ripgrep
 
 # Table of contents
 
-1. [Key bindings](#key-bindings) (jump: *14g*)
-2. [Ripgrep (Rust) Regex syntax](#ripgrep-regex-syntax) (jump: *25g*)
-3. [FZF search syntax](#fzf-search-syntax) (jump: *210g*)
-4. [Upstream documentation](#upstream-documentation) (jump: *229g*)
+1. [Usage](#usage) (jump: *15g*)
+1. [Key bindings](#key-bindings) (jump: *35g*)
+2. [Ripgrep (Rust) Regex syntax](#ripgrep-regex-syntax) (jump: *50g*)
+3. [FZF search syntax](#fzf-search-syntax) (jump: *243g*)
+4. [Upstream documentation](#upstream-documentation) (jump: *262g*)
+
+# Usage
+
+## `fzf-search`
+
+```shell
+$ fzf-search [PATH...]
+```
+
+The default behaviour is to search the current directory.  The files
+are discovered by `rg`, so you may customise file discovery by using a
+Ripgrep configuration file.  You can set the `RIPGREP_CONFIG_PATH`
+environment variable to specify the file.  To search multiple
+directories, you can provide the list of paths as positional
+arguments.
+
+Ripgrep is executed with the `--smart-case` option, which implies a
+case insensitive search if the search query is all lower case, but
+case sensitive otherwise.
+
+## `fzf-file`
+
+```shell
+$ fzf-file [PATH...]
+```
+
+Same as above, the default behaviour to filter files is to discover
+files in the current directory.  However to filter through files in
+multiple directories, you can provide a list of paths as positional
+arguments.  Files are discovered using `rg --files`.
+
+## Piped usage
+
+```shell
+$ find <dir> -type d | QUERY='foo bar' fzf-search
+```
+
+Both scripts can be invoked on a list of files piped through the
+scripts.  You can specify the search query during invocation by
+setting the `QUERY` environment variable to the query string.
 
 # Key bindings
 
@@ -28,6 +69,8 @@ Recursively search w/ FZF & Ripgrep
 **M-RET**
 : open the current file with `$EDITOR`
 
+**C-↑/↓**
+: scroll preview window up/down
 
 # Ripgrep (Rust) regex syntax
 

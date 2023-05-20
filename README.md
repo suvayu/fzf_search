@@ -27,14 +27,16 @@ Here is a mini screencast demonstrating some of these features.
 
 ## Example commands
 
-- Find files in a directory to search:
+- Find files to search in current directory/path(s):
   ```shell
-  $ fzf-file <directory>
+  $ fzf-file [PATH...]
   ```
-- Search the current directory:
+- Search the current directory/in paths:
   ```shell
-  $ fzf-search <query>
+  $ fzf-search [PATH...]
   ```
+
+More documentation on usage can be found in the [manual](./help.md).
 
 ## Dependencies
 
@@ -55,8 +57,8 @@ this:
 1. Checkout this repo, and add it to your `$PATH`
 
    ```shell
-   $ git checkout https://github.com/suvayu/fzf_search.git
-   $ export PATH="$PWD/fzf_search:$PATH"
+   git checkout https://github.com/suvayu/fzf_search.git
+   export PATH="$PWD/fzf_search:$PATH"
    ```
 
    To make this permanent, set this value of `$PATH` in your shell's
@@ -66,11 +68,11 @@ this:
 2. Checkout this repo, and create symlinks to the scripts in a
    directory that is present in your `$PATH`.  Say `~/bin` is in your
    `$PATH`.
-   
+
    ```shell
-   $ git checkout https://github.com/suvayu/fzf_search.git
-   $ cd ~/bin
-   $ ln -s $OLDPWD/fzf_search/fzf-{search,file} .
+   git checkout https://github.com/suvayu/fzf_search.git
+   cd ~/bin
+   ln -s $OLDPWD/fzf_search/fzf-{search,file} .
    ```
 
 2. Copy over the scripts (`fzf-{search,file}`) and `help.1` to a
@@ -92,7 +94,7 @@ pull`.  If you opted for option (3) to install, you need to reinstall.
 
 ### FAQ
 
-#### I see characters like `^[[0m`, `^[[3m` in `fzf`, and file preview breaks
+#### 1. I see characters like `^[[0m`, `^[[3m` in `fzf`, and file preview breaks
 
 For some reason ANSI escape codes are not being interpreted by `fzf`
 correctly, that leads to incorrect file names, which breaks the file
