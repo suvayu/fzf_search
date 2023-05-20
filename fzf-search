@@ -35,6 +35,7 @@ fi
 declare RG="rg --column --line-number --no-heading --with-filename --color=${_COLOR} --smart-case"
 declare RG_PIPE="cat $CACHE | xargs $RG"
 declare FZF_DEFAULT_COMMAND="$RG_PIPE $QUERY || true"
+declare FZF_DEFAULT_OPTS="--ansi --header-first --exact --multi"
 
 declare VIEWER HEADER LESS_SCROLL="less +{2}g"
 if [[ -f $(which bat 2> /dev/null) ]]; then
@@ -43,7 +44,6 @@ if [[ -f $(which bat 2> /dev/null) ]]; then
 else
     VIEWER="$LESS_SCROLL -N '+/{q}'"
 fi
-declare FZF_DEFAULT_OPTS="--ansi --header-first --exact --multi"
 
 declare PARSE_LINES="cat {+f} | cut -d: -f1 | uniq"
 
