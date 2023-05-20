@@ -3,6 +3,13 @@
 # # debug
 # set -o xtrace
 
+declare SRCDIR=$(dirname $(readlink -e $0))
+
+if [[ $1 =~ -h|--help ]]; then
+    man -l $SRCDIR/help.1
+    exit
+fi
+
 # QUERY is optionally set externally: QUERY='foo bar' fzf-file
 declare QUERY
 if [[ ! -t 0 ]]; then		# stdin not attached to a tty
@@ -10,8 +17,6 @@ if [[ ! -t 0 ]]; then		# stdin not attached to a tty
 else
     FZF_DEFAULT_COMMAND="rg --files $@" # support multiple directories
 fi
-
-declare SRCDIR=$(dirname $(readlink -e $0))
 
 declare VIEWER HEADER
 if [[ -f $(which bat 2> /dev/null) ]]; then

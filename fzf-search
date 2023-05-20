@@ -3,6 +3,13 @@
 # # debug
 # set -o xtrace
 
+declare SRCDIR=$(dirname $(readlink -e $0))
+
+if [[ $1 =~ -h|--help ]]; then
+    man -l $SRCDIR/help.1
+    exit
+fi
+
 declare tmpdir=$(mktemp -d)
 declare CACHE=$tmpdir/fzf-search-file-cache-${UID}.txt
 
@@ -17,8 +24,6 @@ else
 	rg --files > $CACHE
     fi
 fi
-
-declare SRCDIR=$(dirname $(readlink -e $0))
 
 if [[ -n $NOCOLOR ]]; then
     declare _COLOR=never
