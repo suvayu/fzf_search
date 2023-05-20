@@ -13,6 +13,8 @@ fi
 declare tmpdir=$(mktemp -d)
 declare CACHE=$tmpdir/fzf-search-file-cache-${UID}.txt
 
+trap "rm -rf $tmpdir" EXIT INT TERM
+
 # QUERY is optionally set externally: QUERY='foo bar' fzf-search
 declare QUERY _PATHS=("$@")	# preserve spaces in path names
 if [[ ! -t 0 ]]; then		# stdin not attached to a tty
@@ -57,5 +59,3 @@ fzf --prompt='? ' --query "$QUERY" --disabled --delimiter : \
     --bind "change:reload($RG_PIPE {q} || true)" \
     --bind "ctrl-s:select-all+execute($PARSE_LINES | fzf-search || true)+deselect-all" \
     --bind "ctrl-f:select-all+execute($PARSE_LINES | QUERY='{q}' fzf-file || true)+deselect-all"
-
-rm -rf $tmpdir
