@@ -5,10 +5,17 @@
 
 declare tmpdir=$(mktemp -d)
 declare CACHE=$tmpdir/fzf-search-file-cache-${UID}.txt
+
+# QUERY is optionally set externally: QUERY='foo bar' fzf-search
+declare QUERY _PATHS=("$@")	# preserve spaces in path names
 if [[ ! -t 0 ]]; then		# stdin not attached to a tty
     cat /dev/stdin > $CACHE
 else
-    rg --files > $CACHE
+    if [[ $# -gt 0 ]]; then
+	echo "${_PATHS[@]}" > $CACHE
+    else
+	rg --files > $CACHE
+    fi
 fi
 
 declare SRCDIR=$(dirname $(readlink -e $0))
@@ -19,10 +26,10 @@ else
     declare _COLOR=always
 fi
 
-declare QUERY="$1"
+# NOTE: fzf runs the command in a separate shell, can't use functions
 declare RG="rg --column --line-number --no-heading --with-filename --color=${_COLOR} --smart-case"
 declare RG_PIPE="cat $CACHE | xargs $RG"
-declare FZF_DEFAULT_COMMAND="$RG_PIPE $QUERY"
+declare FZF_DEFAULT_COMMAND="$RG_PIPE $QUERY || true"
 
 declare VIEWER HEADER LESS_SCROLL="less +{2}g"
 if [[ -f $(which bat 2> /dev/null) ]]; then
