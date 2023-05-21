@@ -8,7 +8,7 @@ Recursively search w/ FZF & Ripgrep
 
 1. [Usage](#usage) (jump: *15g*)
 1. [Key bindings](#key-bindings) (jump: *35g*)
-2. [Ripgrep (Rust) Regex syntax](#ripgrep-regex-syntax) (jump: *50g*)
+2. [Ripgrep (Rust) Regex syntax](#ripgrep-rust-regex-syntax) (jump: *50g*)
 3. [FZF search syntax](#fzf-search-syntax) (jump: *243g*)
 4. [Upstream documentation](#upstream-documentation) (jump: *262g*)
 
