@@ -101,7 +101,7 @@ correctly, that leads to incorrect file names, which breaks the file
 preview.  You can disable colour as a workaround.
 
 ```shell
-  $ NOCOLOR=1 fzf-search <query>
+  $ NOCOLOR=1 fzf-search [PATH...]
 ```
 
 #### 2. Binary files are matching
