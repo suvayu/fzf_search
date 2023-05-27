@@ -33,8 +33,12 @@ else
     declare _COLOR=always
 fi
 
+if [[ -n NOBINARY ]]; then
+    declare _NOBINARY=--no-binary
+fi
+
 # NOTE: fzf runs the command in a separate shell, can't use functions
-declare RG="rg --column --line-number --no-heading --with-filename --color=${_COLOR} --smart-case"
+declare RG="rg ${_NOBINARY} --column --line-number --no-heading --with-filename --color=${_COLOR} --smart-case"
 declare RG_PIPE="cat $CACHE | xargs $RG"
 declare FZF_DEFAULT_COMMAND="$RG_PIPE $QUERY || true"
 declare FZF_DEFAULT_OPTS="--ansi --header-first --exact --multi"

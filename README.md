@@ -103,3 +103,11 @@ preview.  You can disable colour as a workaround.
 ```shell
   $ NOCOLOR=1 fzf-search <query>
 ```
+
+#### 2. Binary files are matching
+
+If binary files are showing up in matches, you can ignore them as:
+
+```shell
+   $ NOBINARY=1 fzf-search [PATH...]
+```
