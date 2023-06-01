@@ -1,7 +1,7 @@
 # Ripgrep + FZF
 
 ```
-$ fzf-search [query]
+$ fzf-search [PATH...]
 ```
 Search a source tree recursively with `rg` and `fzf`.
 
