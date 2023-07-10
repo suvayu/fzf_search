@@ -86,6 +86,18 @@ where you have a user directory in your `$PATH`, however if that's not
 the case, (1) is a somewhat simpler alternative.  While (3) works, it
 is discouraged as it's difficult to update the scripts.
 
+### Running on NixOS
+
+If you are on NixOS (or use the `nix` package manager independently),
+the repo includes a flake recipe so that you can run the scripts with:
+```shell
+nix run github:suvayu/fzf_search#fzf-search
+```
+or
+```shell
+nix run github:suvayu/fzf_search#fzf-file
+```
+
 ### Updating
 
 If you have followed options (1) or (2) to install the scripts, you
