@@ -33,7 +33,7 @@ else
     declare _COLOR=always
 fi
 
-if [[ -n NOBINARY ]]; then
+if [[ -n $NOBINARY ]]; then
     declare _NOBINARY=--no-binary
 fi
 
