@@ -3,14 +3,16 @@
 # # debug
 # set -o xtrace
 
-declare SRCDIR=$(dirname $(readlink -e $0))
+declare SRCDIR
+SRCDIR=$(dirname $(readlink -e $0))
 
 if [[ $1 =~ -h|--help ]]; then
     man -l $SRCDIR/help.1
     exit
 fi
 
-declare tmpdir=$(mktemp -d)
+declare tmpdir
+tmpdir=$(mktemp -d)
 declare CACHE=$tmpdir/fzf-search-file-cache-${UID}.txt
 
 trap "rm -rf $tmpdir" EXIT INT TERM

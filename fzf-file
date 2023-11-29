@@ -3,7 +3,8 @@
 # # debug
 # set -o xtrace
 
-declare SRCDIR=$(dirname $(readlink -e $0))
+declare SRCDIR
+SRCDIR=$(dirname $(readlink -e $0))
 
 if [[ $1 =~ -h|--help ]]; then
     man -l $SRCDIR/help.1
