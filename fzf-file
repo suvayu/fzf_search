@@ -42,4 +42,4 @@ fzf --prompt='> ' \
     --preview-window "border-left:$HEADER" \
     --bind "enter:execute($VIEWER {1})" \
     --bind "alt-enter:execute($EDITOR {1})" \
-    --bind "ctrl-s:select-all+execute(uniq {+f} | fzf-search ${QUERY} || true)+deselect-all"
+    --bind "ctrl-s:select-all+execute(uniq {+f} | QUERY='${QUERY}' fzf-search || true)+deselect-all"
