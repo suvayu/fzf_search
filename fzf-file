@@ -37,10 +37,11 @@ fi
 declare FZF_DEFAULT_OPTS="--ansi --header-first --exact --multi"
 
 fzf --prompt='> ' \
-    --header "« F1: help, C-s: recursive search, RET: view, M-RET: open »" \
+    --header "« F1: help, C-s: search current files, C-l: cancel filter, RET: view, M-RET: open »" \
     --bind "f1:execute(man -l $SRCDIR/help.1 || true)" \
     --preview "$VIEWER {}" \
     --preview-window "border-left:$HEADER" \
     --bind "enter:execute($VIEWER {1})" \
     --bind "alt-enter:execute($EDITOR {1})" \
-    --bind "ctrl-s:select-all+execute(uniq {+f} | QUERY='${QUERY}' fzf-search || true)+deselect-all"
+    --bind "ctrl-s:select-all+execute(uniq {+f} | QUERY='${QUERY}' fzf-search || true)+deselect-all" \
+    --bind "ctrl-l:cancel"

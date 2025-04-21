@@ -55,7 +55,10 @@ setting the `QUERY` environment variable to the query string.
 # Key bindings
 
 **F1**
-: this help message
+: show this help message
+
+**C-u**
+: recursive search - start a new search session with the current file
 
 **C-s**
 : recursive search - start a new search session with the current set of files
@@ -63,11 +66,17 @@ setting the `QUERY` environment variable to the query string.
 **C-f**
 : filter current set of files
 
+**C-l**
+: cancel search - cancel current search and wait for new input
+
 **RET**
 : view the current file in a pager
 
 **M-RET**
 : open the current file with `$EDITOR`
+
+**↑/↓**
+: scroll to previous/next matching file
 
 **C-↑/↓**
 : scroll preview window up/down
