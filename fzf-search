@@ -45,13 +45,14 @@ declare RG_PIPE="cat $CACHE | xargs $RG"
 declare FZF_DEFAULT_COMMAND="$RG_PIPE $QUERY || true"
 declare FZF_DEFAULT_OPTS="--ansi --header-first --exact --multi"
 
-declare VIEWER HEADER LESS_SCROLL="less +{2}g"
+declare VIEWER HEADER WIDTH LESS_SCROLL="less +{2}g"
 if [[ -f $(which bat 2> /dev/null) ]]; then
     HEADER='~4,'
     VIEWER="bat --style=full --color=always --paging=always -H {2} --pager '$LESS_SCROLL'"
 else
     VIEWER="$LESS_SCROLL -N '+/{q}'"
 fi
+[[ $COLUMNS -gt 160 ]] && WIDTH=",60%"
 
 declare PARSE_LINES="cat {+f} | cut -d: -f1 | uniq"
 
@@ -59,7 +60,7 @@ fzf --prompt='? ' --query "$QUERY" --disabled --delimiter : \
     --header "«F1: help, C-u/s: recursive search current file(s), C-f: filter files, C-l: cancel search, RET: view, M-RET: open»" \
     --bind "f1:execute(man -l $SRCDIR/help.1 || true)" \
     --preview "$VIEWER {1}" \
-    --preview-window "border-left:${HEADER},+{2}-3" \
+    --preview-window "border-left:${HEADER}${WIDTH},+{2}-3" \
     --bind "enter:execute($VIEWER {1})" \
     --bind "alt-enter:execute($EDITOR +{2} {1})" \
     --bind "change:reload($RG_PIPE {q} || true)" \

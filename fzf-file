@@ -19,7 +19,7 @@ else
     FZF_DEFAULT_COMMAND="rg --files $@" # support multiple directories
 fi
 
-declare VIEWER HEADER
+declare VIEWER HEADER WIDTH
 if [[ -f $(which bat 2> /dev/null) ]]; then
     HEADER='~4'
     if [[ -n $QUERY ]]; then
@@ -35,12 +35,13 @@ else
     fi
 fi
 declare FZF_DEFAULT_OPTS="--ansi --header-first --exact --multi"
+[[ $COLUMNS -gt 160 ]] && WIDTH=",60%"
 
 fzf --prompt='> ' \
     --header "« F1: help, C-s: search current files, C-l: cancel filter, RET: view, M-RET: open »" \
     --bind "f1:execute(man -l $SRCDIR/help.1 || true)" \
     --preview "$VIEWER {}" \
-    --preview-window "border-left:$HEADER" \
+    --preview-window "border-left:${HEADER}${WIDTH}" \
     --bind "enter:execute($VIEWER {1})" \
     --bind "alt-enter:execute($EDITOR {1})" \
     --bind "ctrl-s:select-all+execute(uniq {+f} | QUERY='${QUERY}' fzf-search || true)+deselect-all" \
