@@ -84,5 +84,5 @@ fzf --prompt='? ' --query "$QUERY" --disabled --delimiter : \
     --bind "ctrl-s:select-all+execute($PARSE_LINES | fzf-search || true)+deselect-all" \
     --bind "ctrl-u:select+execute(fzf-search {1} || true)+deselect-all" \
     --bind "ctrl-f:select-all+execute($PARSE_LINES | QUERY='{q}' fzf-file || true)+deselect-all" \
-    --bind "alt-a:accept" \
+    --bind "alt-a:accept" --accept-nth "+{2} {1}" \
     --bind "ctrl-l:cancel"
