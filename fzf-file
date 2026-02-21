@@ -18,6 +18,7 @@ if [[ ! -t 0 ]]; then		# stdin not attached to a tty
 else
     FZF_DEFAULT_COMMAND="rg --files $@" # support multiple directories
 fi
+declare FZF_DEFAULT_OPTS="--ansi --header-first --exact --multi"
 
 declare VIEWER HEADER WIDTH
 if [[ -f $(which bat 2> /dev/null) ]]; then
@@ -34,15 +35,31 @@ else
 	VIEWER="less -NS"
     fi
 fi
-declare FZF_DEFAULT_OPTS="--ansi --header-first --exact --multi"
 [[ $COLUMNS -gt 160 ]] && WIDTH=",60%"
 
+function quote() {
+    IFS=','
+    echo "«${*}»" # | fold -w$COLUMNS
+}
+
+declare -a bindings=(
+    "F1: help"
+    "C-s: search current files"
+    "M-a: print & quit"
+    "C-l: cancel search"
+    "RET: view"
+    "M-RET: open"
+)
+declare HINT
+HINT=$(quote "${bindings[@]}")
+
 fzf --prompt='> ' \
-    --header "« F1: help, C-s: search current files, C-l: cancel filter, RET: view, M-RET: open »" \
+    --header "$HINT" \
     --bind "f1:execute(man -l $SRCDIR/help.1 || true)" \
     --preview "$VIEWER {}" \
     --preview-window "border-left:${HEADER}${WIDTH}" \
     --bind "enter:execute($VIEWER {1})" \
     --bind "alt-enter:execute($EDITOR {1})" \
     --bind "ctrl-s:select-all+execute(uniq {+f} | QUERY='${QUERY}' fzf-search || true)+deselect-all" \
+    --bind "alt-a:accept" \
     --bind "ctrl-l:cancel"
