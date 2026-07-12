@@ -18,15 +18,16 @@ if [[ ! -t 0 ]]; then		# stdin not attached to a tty
 else
     FZF_DEFAULT_COMMAND="rg --files $@" # support multiple directories
 fi
-declare FZF_DEFAULT_OPTS="--ansi --header-first --exact --multi"
+declare FZF_DEFAULT_OPTS="--ansi --header-first --exact"
+declare BAT="bat --style=full --color=always --paging=always" # --lessopen (has to be enabled at compile time)
 
 declare VIEWER HEADER WIDTH
 if [[ -f $(which bat 2> /dev/null) ]]; then
     HEADER='~4'
     if [[ -n $QUERY ]]; then
-	VIEWER="bat --style=full --color=always --paging=always --pager 'less \"+/$QUERY\"'"
+	VIEWER="$BAT --pager 'less \"+/$QUERY\"'"
     else
-	VIEWER="bat --style=full --color=always --paging=always"
+	VIEWER="$BAT"
     fi
 else
     if [[ -n $QUERY ]]; then
@@ -55,11 +56,11 @@ HINT=$(quote "${bindings[@]}")
 
 fzf --prompt='> ' \
     --header "$HINT" \
-    --bind "f1:execute(man -l $SRCDIR/help.1 || true)" \
     --preview "$VIEWER {}" \
     --preview-window "border-left:${HEADER}${WIDTH}" \
+    --bind "f1:execute(man -l $SRCDIR/help.1 || true)" \
     --bind "enter:execute($VIEWER {1})" \
     --bind "alt-enter:execute($EDITOR {1})" \
-    --bind "ctrl-s:select-all+execute(uniq {+f} | QUERY='${QUERY}' fzf-search || true)+deselect-all" \
+    --bind "ctrl-s:select-all+execute(cat {*f} | QUERY='${QUERY}' fzf-search || true)+deselect-all" \
     --bind "alt-a:accept" \
     --bind "ctrl-l:cancel"
