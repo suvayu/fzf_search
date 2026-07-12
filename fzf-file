@@ -38,6 +38,22 @@ else
 fi
 [[ $COLUMNS -gt 160 ]] && WIDTH=",60%"
 
+# terminal graphics protocol; deps: kitty, magick, mediainfo
+declare IMGVIEWER
+if [[ -f $(which kitten 2> /dev/null) ]]; then
+    xfmode=$( 2>&1 kitten icat --detect-support )
+    tgp=$?
+fi
+
+if [[ $tgp -eq 0 ]]; then
+    # FIXME: can we write a function, and export?  How do we get FZF_*
+    # env variables expanded later?
+    declare imgsize='${FZF_PREVIEW_COLUMNS}x$(( ${FZF_PREVIEW_LINES} - 2 ))'
+    IMGVIEWER="identify {}; echo; kitten icat --clear --transfer-mode=$xfmode --stdin=no --fit both --loop 3 --place=$imgsize@0x0 {}"
+else
+    IMGVIEWER="mediainfo {}"
+fi
+
 function quote() {
     IFS=','
     echo "«${*}»" # | fold -w$COLUMNS
@@ -56,8 +72,9 @@ HINT=$(quote "${bindings[@]}")
 
 fzf --prompt='> ' \
     --header "$HINT" \
-    --preview "$VIEWER {}" \
+    --preview "case \${ file --mime-type {} | cut -d' ' -f2;} in image/*) $IMGVIEWER;; *) $VIEWER {}; esac" \
     --preview-window "border-left:${HEADER}${WIDTH}" \
+    --bind "focus:clear-screen" \
     --bind "f1:execute(man -l $SRCDIR/help.1 || true)" \
     --bind "enter:execute($VIEWER {1})" \
     --bind "alt-enter:execute($EDITOR {1})" \

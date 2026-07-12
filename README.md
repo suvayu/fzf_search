@@ -46,6 +46,8 @@ More documentation on usage can be found in the [manual](./help.md).
   It's a `cat` clone with syntax highlighting support.  If it isn't
   found in `$PATH`, `less` is used.
 - `man` to see the help message
+- Image preview depends on `kitty`, `magick`
+  - fallback: `mediainfo`
 
 ## Installation
 
